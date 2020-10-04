@@ -22,8 +22,6 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(cookieParser());
 app.use( express.static( "public" ) );
 
-app.set('views', 'home/Project/cis4595/views');
-
 app.use(session({
   genid: (req) => {
     return uuid() // use UUIDs for session IDs
@@ -58,8 +56,8 @@ io.on('connection',function(socket){
 });
 
 
-const port=process.env.PORT || 80;
-server.listen(port,'localhost',function(){
+const port=process.env.PORT || 3000;
+server.listen(port,'25.78.34.98',function(){
 console.log(`listening on port ${port}...`);
 });
 module.exports = app;
