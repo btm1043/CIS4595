@@ -9,7 +9,7 @@ var logger = require('morgan');
 var bodyParser= require("body-parser");
 const uuid = require('uuid/v4');
 
-var mainframe = require(__dirname + '\\routes\\mainframe.js');
+var mainframe = require(__dirname + '/routes/mainframe.js');
 
 var jwt=require('jsonwebtoken');
 //https://jsao.io/2015/06/authentication-with-node-js-jwts-and-oracle-database/
