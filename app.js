@@ -35,9 +35,24 @@ app.use(session({
 
 app.use('/', mainframe);
 
-//User SET
-const activeUsers = new Set();
+const aUsers= new Set();
 
+const User = class{
+	constructor(username,socketID,chatroom){
+		this.id=aUsers.size;
+		this.username=username;
+		this.socketID=socketID;
+		this.chatroom=chatroom
+	}
+	
+	welcome(){
+		console.log('Hey, welcome '+this.username+' they are socket '+this.socketID);
+	}
+}
+
+
+//User SET
+//const activeUsers = new Set();
 //realtime response
 io.on('connection',function(socket){
 	console.log('user connected');
@@ -45,21 +60,39 @@ io.on('connection',function(socket){
 	
 	socket.on("new user", async(data)=> {
 		console.log(data);
-		socket.userId = data;
-		activeUsers.add(data);
-		io.emit("new user", [...activeUsers]);
+		let user= new User(data.split(",")[0],socket.id,data.split(",")[1]);
+		socket.userId = data.split(",")[0];
+		socket.room=data.split(",")[1];
+		socket.join(data.split(",")[1]);
+		//activeUsers.add(data.split(",")[0]);
+		aUsers.add(user);
+		user.welcome();
+		console.log(aUsers);
+		
+		
+		let activeUsers = new Set();
+		
+		aUsers.forEach(x=>x.chatroom===data.split(",")[1] ? activeUsers.add(x.username):x);
+		
+		console.log(activeUsers);
+		io.to(data.split(",")[1]).emit("new user", [...activeUsers]);
+	});
+	
+	socket.on('chat_message',async(data)=>{
+		io.to(socket.room).emit("chat_message", "<strong>"+socket.userId+"</strong> "+data);
 	});
 
   socket.on("disconnect", () => {
-    activeUsers.delete(socket.userId);
-    io.emit("user disconnected", socket.userId);
+    //activeUsers.delete(socket.userId);
+	aUsers.forEach(x=>x.username===socket.userId ? aUsers.delete(x):x);
+    io.to(socket.room).emit("user disconnected", socket.userId);
   });
   
 });
 
 
 const port=process.env.PORT || 3000;
-server.listen(port,'25.78.34.98',function(){
+server.listen(port,'localhost',function(){
 console.log(`listening on port ${port}...`);
 });
 module.exports = app;
