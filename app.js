@@ -92,7 +92,7 @@ io.on('connection',function(socket){
 
 
 const port=process.env.PORT || 3000;
-server.listen(port,'localhost',function(){
+server.listen(port,'25.78.34.98',function(){
 console.log(`listening on port ${port}...`);
 });
 module.exports = app;
