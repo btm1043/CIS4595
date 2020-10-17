@@ -37,6 +37,8 @@ app.use('/', mainframe);
 
 const aUsers= new Set();
 
+
+//Users class for use in tracking online users.
 const User = class{
 	constructor(username,socketID,chatroom){
 		this.id=aUsers.size;
@@ -58,6 +60,7 @@ io.on('connection',function(socket){
 	console.log('user connected');
 	console.log(socket.id);
 	
+	//When users joins a chatroom
 	socket.on("new user", async(data)=> {
 		console.log(data);
 		let user= new User(data.split(",")[0],socket.id,data.split(",")[1]);
@@ -78,10 +81,12 @@ io.on('connection',function(socket){
 		io.to(data.split(",")[1]).emit("new user", [...activeUsers]);
 	});
 	
+	//When user sends message
 	socket.on('chat_message',async(data)=>{
 		io.to(socket.room).emit("chat_message", "<strong>"+socket.userId+"</strong> "+data);
 	});
 
+	//When user disconnects
   socket.on("disconnect", () => {
     //activeUsers.delete(socket.userId);
 	aUsers.forEach(x=>x.username===socket.userId ? aUsers.delete(x):x);
