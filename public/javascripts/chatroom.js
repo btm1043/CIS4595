@@ -7,6 +7,7 @@ const newUserConnected = (user) => {
   userName = user || `User${Math.floor(Math.random() * 1000000)}`;
   
   socket.emit("new user", userName+","+(document.location.pathname).split("/")[2]);
+  $('#ausers').append($('<li>').html(userName));
   addToUsersBox(userName);
 };
 
@@ -39,4 +40,6 @@ socket.on("user disconnected", function (userName) {
 
 socket.on('chat_message', function(msg){
 	$('#messages').append($('<li>').html(msg));
+	var mdiv=document.getElementById("chatmessages");
+	mdiv.scrollTop=mdiv.scrollHeight;
 });

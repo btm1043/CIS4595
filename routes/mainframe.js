@@ -24,6 +24,18 @@ router.get('/',async(req,res,next)=>{
     
 });
 
+router.get('/logout',async(req,res,next)=>{
+    try{
+		req.session.destroy();
+		res.redirect('../');
+
+    }catch (e){
+        next(e);
+    }
+    
+});
+
+
 router.get('/chatroom/*',async(req,res,next)=>{
     try{
 		if(req.session.userstat!=1){

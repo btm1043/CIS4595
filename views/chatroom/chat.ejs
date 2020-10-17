@@ -61,12 +61,31 @@
   to {transform: scale(1)}
 }
 
+#chatbox{
+	position:relative;
+	height:400px;
+	overflow:hidden;
+	width:60%;
+	margin: auto;
+	border: 2px solid black;
+}
+#chatmessages{
+	margin: auto;
+	height:90%;
+	overflow-y:scroll;
+}
+.flex-container{
+	
+	display:flex;
+	flex-direction:column;
+}
+
 body { font: 13px Helvetica, Arial; }
-#chatForm { background: #fff; padding: 3px; position: fixed; bottom: 0; width: 100%; border-color: #000; border-top-style: solid; border-top-width: 1px;}
-form input { border-style: solid; border-width: 1px; padding: 10px; width: 85%; margin-right: .5%; }
+#chatForm { background: #fff; position:absolute; bottom:0px; padding: 3px; width: 99.5%; border-color: #000; border-top-style: solid; border-top-width: 1px;}
+#chatForm input { border-style: solid; border-width: 1px; padding: 10px; width: 85%; margin-right: .5%; }
 form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; margin-left: 2%; }
-#messages { list-style-type: none; margin: 0; padding: 0; }
-#messages li { padding: 5px 10px; }
+#messages { list-style-type: none; margin: 0; padding: 0; width:100%; flex-grow:1;}
+#messages li { padding: 5px 10px;}
 #messages li:nth-child(odd) { background: #eee; }
 </style>
  
@@ -96,8 +115,6 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
     <button type="submit">Login</button>
 	</form>
 	</div>
-
-	<p id="demo"></p>
 	</div>
   <%}%>
   
@@ -111,11 +128,15 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
           <h4>Active users</h4>
         </div>
     </div>
-  
-  <ul id="messages"></ul>
-  <form action="/" method="POST" id="chatForm">
-	<input id="txt" autocomplete="off" autofocus="on" placeholder="message"/><button>Send</button>
-  </form>
+		
+  <div id="chatbox">
+	<div id="chatmessages">
+	<ul id="messages" class="flex-container"></ul>
+	<div>
+	<form action="/" method="POST" id="chatForm">
+		<input id="txt" autocomplete="off" autofocus="on" placeholder="message"/><button>Send</button>
+	</form>
+  </div>
   
 </div>
 <script src="../socket.io/socket.io.js"></script>
