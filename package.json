@@ -23,7 +23,6 @@
     "ftp": "^0.3.10",
     "http": "0.0.0",
     "http-errors": "~1.6.2",
-    "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "~1.9.0",
     "mssql": "^6.0.0",
