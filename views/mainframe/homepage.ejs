@@ -5,68 +5,22 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>Capstone Project</title>
 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300' type='text/css' rel='stylesheet' />
-<style>
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 33%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Add Zoom Animation */
-.animate {
-  -webkit-animation: animatezoom 0.6s;
-  animation: animatezoom 0.6s
-}
-
-@-webkit-keyframes animatezoom {
-  from {-webkit-transform: scale(0)}
-  to {-webkit-transform: scale(1)}
-}
-
-@keyframes animatezoom {
-  from {transform: scale(0)}
-  to {transform: scale(1)}
-}
-</style>
+<link href='/css/style.css' type='text/css' rel='stylesheet' />
  
 </head>
-
+<% include ../newheader %>
 <body>
 <div id="container" class="center">
-  <% include ../newheader %>
   
   <% if (loggedin==0) { %>
 	<div id="myModal" class="modal" style="display:block">
@@ -94,18 +48,15 @@
         </div>
     </div>
   
-  
-  <% include ../newfooter %>
 </div>
 <script src="../socket.io/socket.io.js"></script>
 <script src="/javascripts/chatroom.js"></script>
 </body>
-
+ <% include ../newfooter %>
 <script>
 if(<%=loggedin%>==1){
 	newUserConnected('<%=username%>');
 }
-
 
 </script>
 </html>

@@ -1,0 +1,137 @@
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  /* <!--PRIMARY LAYOUT--> */
+
+.navbar-default {
+/*colors, text*/
+
+}
+
+body{
+      background-color: rgb(8, 68, 104);
+  }
+
+.card-container{
+    width: 40%;
+    margin: 0 auto;
+  }
+.card{
+       overflow:hidden;
+        background-color: #fff;
+        min-width: 50%;
+        margin: 0 auto;
+        padding: 40px 20px 40px 20px;
+        border: 1px solid black;
+        border-radius: 5px;
+}
+
+.pad{
+    padding:20px;
+}
+.margin{margin:20px;}
+
+  .center{
+      margin: 0;
+  }
+  .modal-content {
+    background-color: #ffffff;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  a{
+      color: #fff;
+  }
+  .footer{
+      padding: 20px 0 0 0;
+  }
+  .close:hover,
+  .close:focus {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* Add Zoom Animation */
+  .animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+  }
+  
+  @-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)}
+    to {-webkit-transform: scale(1)}
+  }
+  
+  @keyframes animatezoom {
+    from {transform: scale(0)}
+    to {transform: scale(1)}
+  }
+
+/* <!--CHATBOX--> */
+  
+#chatbox{ 
+	position:relative;
+	height:400px;
+	overflow:hidden;
+	/* width:60%; */
+	margin: auto;
+	border: 2px solid black;
+}
+#chatmessages{
+	margin: auto;
+	height:100%;
+	overflow-y:scroll;
+}
+.flex-container{
+	
+	display:flex;
+	flex-direction:column;
+}
+
+body { font: 13px Helvetica, Arial; }
+#chatForm { 
+    background: #fff; 
+     padding: 3px; 
+    width: 99.5%; 
+    }
+     
+#chatForm input {
+     padding: 10px;
+    width: 85%; 
+}
+form button { 
+    /* width: 9%;  */
+    background: rgb(130, 224, 255);
+     border: none; 
+     padding: 10px; 
+     margin-left: 2%; }
+#messages { 
+    list-style-type: none; 
+    margin: 0;
+     padding: 0;
+     width:100%;
+      flex-grow:1;
+    }
+#messages li { padding: 5px 10px;}
+#messages li:nth-child(odd) { background: #eee; }
