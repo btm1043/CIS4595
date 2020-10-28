@@ -5,76 +5,42 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>Capstone Project</title>
 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- font awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300' type='text/css' rel='stylesheet' />
-<style>
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
+<link href='/css/style.css' type='text/css' rel='stylesheet' />
 
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 33%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Add Zoom Animation */
-.animate {
-  -webkit-animation: animatezoom 0.6s;
-  animation: animatezoom 0.6s
-}
-
-@-webkit-keyframes animatezoom {
-  from {-webkit-transform: scale(0)}
-  to {-webkit-transform: scale(1)}
-}
-
-@keyframes animatezoom {
-  from {transform: scale(0)}
-  to {transform: scale(1)}
-}
-</style>
- 
 </head>
-
+<% include ./newheader %>
 <body>
-<div id="container" class="center">
-  <% include ./newheader %>
-  
-  HOMEPAGE
-  <button onclick="javascript:window.location.href='./chatroom/test'">Go to Chatroom Test </button>
-  <button onclick="javascript:window.location.href='./chatroom/free'">Go to Chatroom Free </button>
-  
-  
-  <% include ./newfooter %>
+<div class="container-fluid">
+  <div class = "row card-container" >
+    <div class = "col-xs-6 text-center">
+      <div class = "card"  onclick="javascript:window.location.href='./chatroom/test'">
+         <h4>Go to Chatroom test</h4>
+         <i class="fa fa-music" style="font-size:48px;color:rgb(255, 227, 71);"></i>
+      </div>
+     
+    </div>
+    <div class = "col-xs-6 text-center">
+      <div class = "card"  onclick="javascript:window.location.href='./chatroom/free'">
+        <h4>Go to Chatroom test</h4>
+        <i class="fa fa-cube" style="font-size:48px;color:rgb(255, 227, 71)" ></i>
+     </div>
+    </div>;
+   </div>
 </div>
 <script src="../socket.io/socket.io.js"></script>
 </body>
+<% include ./newfooter %>
 </html>
