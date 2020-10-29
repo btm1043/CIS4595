@@ -1,3 +1,6 @@
+
+
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -11,17 +14,28 @@
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
-  /* <!--PRIMARY LAYOUT--> */
 
-.navbar-default {
-/*colors, text*/
 
+  /* <!--Styles--> */
+
+.navbar-brand{
+  font-size: 30px;
+  color: rgb(255, 227, 71);
+  font-weight: bold;
+
+}
+
+a{
+  color: #fff;
 }
 
 body{
       background-color: rgb(8, 68, 104);
+      
   }
-
+#activeUsers h5{
+  color: #eee;
+}
 .card-container{
     width: 40%;
     margin: 0 auto;
@@ -35,7 +49,9 @@ body{
         border: 1px solid black;
         border-radius: 5px;
 }
-
+.titleTxt, .activeUserTxt{
+  color: #eee;
+}
 .pad{
     padding:20px;
 }
@@ -59,11 +75,10 @@ body{
     font-size: 28px;
     font-weight: bold;
   }
-  a{
-      color: #fff;
-  }
+ 
   .footer{
       padding: 20px 0 0 0;
+      color: #aaa;
   }
   .close:hover,
   .close:focus {
@@ -101,7 +116,8 @@ body{
 #chatmessages{
 	margin: auto;
 	height:100%;
-	overflow-y:scroll;
+  overflow-y:scroll;
+  background-color: #eee;
 }
 .flex-container{
 	
