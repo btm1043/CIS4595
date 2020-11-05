@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Capstone Project</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300' type='text/css' rel='stylesheet' />
+<link href='/css/style.css' type='text/css' rel='stylesheet' />
+ 
+</head>
+<% include ../newheader %>
+<body>
+
+
+<div id="container" class="center">
+  
+  
+  <% if (loggedin==0) { %>
+	<div id="myModal" class="modal" style="display:block">
+
+	<!-- Modal content -->
+	<div class="modal-content animate">
+	<form id="login" action="authenticate" method="POST">
+		<label for="username"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="username" required>
+	<script>
+	window.onload=function(){
+	document.getElementById('fromURL').value=document.location.pathname;
+	}
+	</script>
+	<input type="hidden" id="fromURL" name="fromURL" value="">
+	
+    <button type="submit" style="margin-left:30px;">Login</button>
+	</form>
+	</div>
+	</div>
+  <%}%>
+  
+  <!-- <% if (loggedin==1) { %>
+	<h2 class="h2v2" id="username"><%=username%></h2>
+  <%}%> -->
+</div>
+
+<div class = "container-fluid">
+  <div class = "row margin">
+    <div class = "row">
+      <div class = "col-xs-12">
+        <h3>Theme</h3>
+      </div>
+    </div>
+
+    <div class = "row">
+      <div class = "col-xs-9">
+        <div class="row">
+          <div id="chatbox">
+            <div id="chatmessages">
+              <div><ul id="messages" class="flex-container"></ul></div>
+            </div>
+          </div> 
+        </div>
+        <div class="row">
+          <form action="/" method="POST" id="chatForm">
+            <input id="txt" autocomplete="off" autofocus="on" placeholder="message"/><button>Send</button>
+          </form>
+        </div>
+      </div>
+
+    <div id="video-chat-container" class="video-position" style="display: block">
+      <video id="local-video" autoplay="autoplay"></video>
+      <video id="remote-video" autoplay="autoplay"></video>
+    </div>
+
+  
+      <div class = "col-xs-3">
+        <div class="inbox">
+          <div id="activeUsers">
+            <h4>Active users</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- /* old */ -->
+<script>
+navigator.getUserMedia(
+ { video: true, audio: false },
+ stream => {
+   const localVideo = document.getElementById("local-video");
+   if (localVideo) {
+     localVideo.srcObject = stream;
+   }
+ },
+ error => {
+   console.warn(error.message);
+ }
+);
+</script>
+
+<script src="../socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="/javascripts/videoroom.js"></script>
+
+
+<script>
+if(<%=loggedin%>==1){
+	newUserConnected('<%=username%>');
+}
+</script>
+</body>
+</html>
