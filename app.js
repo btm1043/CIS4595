@@ -56,19 +56,14 @@ const User = class{
 //realtime response
 io.on('connection',function(socket){
 	console.log('user connected');
-	console.log(socket.id);
 	
 	socket.on("new user", async(data)=> {
-		console.log(data);
 		let user= new User(data.split(",")[0],socket.id,data.split(",")[1]);
 		socket.userId = data.split(",")[0];
 		socket.room=data.split(",")[1];
 		socket.join(data.split(",")[1]);
-		//activeUsers.add(data.split(",")[0]);
 		aUsers.add(user);
 		user.welcome();
-		console.log(aUsers);
-		
 		
 		let activeUsers = new Set();
 		
@@ -83,16 +78,59 @@ io.on('connection',function(socket){
 	});
 
   socket.on("disconnect", () => {
-    //activeUsers.delete(socket.userId);
 	aUsers.forEach(x=>x.username===socket.userId ? aUsers.delete(x):x);
     io.to(socket.room).emit("user disconnected", socket.userId);
   });
   
+  socket.on('join', (roomId) => {
+    const roomClients = io.sockets.adapter.rooms[roomId] || { length: 0 }
+    const numberOfClients = roomClients.length
+
+    // These events are emitted only to the sender socket.
+    if (numberOfClients == 0) {
+      console.log(`Creating room ${roomId} and emitting room_created socket event`)
+      socket.join(roomId)
+      socket.emit('room_created', roomId)
+    } else if (numberOfClients <= 5) {
+      console.log(`Joining room ${roomId} and emitting room_joined socket event`)
+      socket.join(roomId)
+      socket.emit('room_joined', roomId)
+    } else {
+      console.log(`Can't join room ${roomId}, emitting full_room socket event`)
+      socket.emit('full_room', roomId)
+    }
+  })
+
+  // These events are emitted to all the sockets connected to the same room except the sender.
+  socket.on('start_call', (roomId) => {
+    console.log(`Broadcasting start_call event to peers in room ${roomId}`)
+    socket.broadcast.to(roomId).emit('start_call')
+  })
+  socket.on('webrtc_offer', (event) => {
+    console.log(`Broadcasting webrtc_offer event to peers in room ${event.roomId}`)
+    socket.broadcast.to(event.roomId).emit('webrtc_offer', {sdp:event.sdp,from:event.from,to:event.to})
+  })
+  socket.on('webrtc_answer', (event) => {
+    console.log(`Broadcasting webrtc_answer event to peers in room ${event.roomId}`)
+    socket.broadcast.to(event.roomId).emit('webrtc_answer', {sdp:event.sdp, from:event.from,to:event.to})
+  })
+  socket.on('webrtc_ice_candidate', (event) => {
+    console.log(`Broadcasting webrtc_ice_candidate event to peers in room ${event.roomId}`)
+    socket.broadcast.to(event.roomId).emit('webrtc_ice_candidate', event)
+  })
+  
+  //Current
+  //Sends list of users in room when user joins
+  socket.on('get_Users',async(data)=>{
+		let users=[]
+		console.log("Getting users");
+		aUsers.forEach(x=>x.chatroom===data.split(",")[1] && x.username!=socket.userId ? users.push(x.username):x);
+		io.to(socket.id).emit("users",users );
+	});
+  
 });
-
-
 const port=process.env.PORT || 3000;
-server.listen(port,'localhost',function(){
+server.listen(port,'192.168.1.222',function(){
 console.log(`listening on port ${port}...`);
 });
 module.exports = app;

@@ -53,6 +53,23 @@ router.get('/chatroom/*',async(req,res,next)=>{
     
 });
 
+router.get('/videoroom/*',async(req,res,next)=>{
+    try{
+		if(req.session.userstat!=1){
+			req.session.userstat=0;
+			req.session.username="";
+		}else{
+			req.session.userstat=1;
+		}
+		console.log(req.session.userstat);
+		res.render(path.join('./chatroom/video'),{loggedin:req.session.userstat,username:req.session.username});
+
+    }catch (e){
+        next(e);
+    }
+    
+});
+
 
 router.post('*/authenticate',async(req, res,next)=> {
 	try{
