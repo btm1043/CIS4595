@@ -45,10 +45,6 @@
 	</div>
 	</div>
   <%}%>
-  
-  <!-- <% if (loggedin==1) { %>
-	<h2 class="h2v2" id="username"><%=username%></h2>
-  <%}%> -->
 </div>
 
 <div class = "container-fluid">
@@ -76,8 +72,14 @@
       </div>
 
     <div id="video-chat-container" class="video-position" style="display: block">
-      <video id="local-video" autoplay="autoplay"></video>
-      <video id="remote-video" autoplay="autoplay"></video>
+      <video id="local-video" autoplay="autoplay" muted="muted"></video>
+	  <div id="remote-videos">
+	  
+	  </div>
+    </div>
+	  <div id="remote-users">
+	  
+	  </div>
     </div>
 
   
@@ -94,20 +96,6 @@
 </div>
 
 <!-- /* old */ -->
-<script>
-navigator.getUserMedia(
- { video: true, audio: false },
- stream => {
-   const localVideo = document.getElementById("local-video");
-   if (localVideo) {
-     localVideo.srcObject = stream;
-   }
- },
- error => {
-   console.warn(error.message);
- }
-);
-</script>
 
 <script src="../socket.io/socket.io.js"></script>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
