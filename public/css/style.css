@@ -1,3 +1,4 @@
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -284,3 +285,9 @@ form button {
     }
 #messages li { padding: 5px 10px;}
 #messages li:nth-child(odd) { background: #eee; }
+
+video{
+	width:30%,
+	height:30%
+}
+
