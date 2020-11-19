@@ -6,7 +6,7 @@ let userName = "";
 const newUserConnected = (user) => {
   userName = user || `User${Math.floor(Math.random() * 1000000)}`;
   
-  socket.emit("new user", userName+","+(document.location.pathname).split("/")[2]);
+  socket.emit("new user", userName+","+(document.location.pathname));
   $('#ausers').append($('<li>').html(userName));
   addToUsersBox(userName);
 };
@@ -25,7 +25,9 @@ const addToUsersBox = (userName) => {
 
 $('#chatForm').submit(function(e){
 		e.preventDefault();
-		socket.emit('chat_message',$('#txt').val());
+		var mess=$('#txt').val()
+		mess.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+		socket.emit('chat_message',mess);
 		$('#txt').val('');
 		return false;
 });

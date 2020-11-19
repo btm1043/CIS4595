@@ -38,46 +38,77 @@ app.use('/', mainframe);
 const aUsers= new Set();
 
 const User = class{
-	constructor(username,socketID,chatroom){
+	constructor(username,socketID, roomid, roomtype){
 		this.id=aUsers.size;
 		this.username=username;
 		this.socketID=socketID;
-		this.chatroom=chatroom
+		this.chatroom=new Room(roomid,roomtype);
 	}
 	
 	welcome(){
 		console.log('Hey, welcome '+this.username+' they are socket '+this.socketID);
+		this.chatroom.roomstats();
 	}
 }
 
+const Room= class{
+	constructor(name,type){
+		this.name=name;
+		this.type= type;
+	}
+	
+	roomstats(){
+		console.log('Room: '+this.name+' type: '+this.type);
+	}
+}
 
-//User SET
-//const activeUsers = new Set();
+const ActiveRooms= new Set();
+
 //realtime response
 io.on('connection',function(socket){
 	console.log('user connected');
 	
 	socket.on("new user", async(data)=> {
-		let user= new User(data.split(",")[0],socket.id,data.split(",")[1]);
+		let roomid=(data.split(",")[1]).split('/')[2];
+		let roomtype= (data.split(",")[1]).split('/')[1];
+		if(roomtype==="videoroom"){
+			roomid='v'+roomid;
+		}	
+		let user= new User(data.split(",")[0],socket.id,roomid,roomtype);
 		socket.userId = data.split(",")[0];
-		socket.room=data.split(",")[1];
-		socket.join(data.split(",")[1]);
+		
+		var existingRoom=0;
+		
+		ActiveRooms.forEach(room => {
+			if(room.name===roomid && room.type===roomtype){
+				console.log("Existing Room");
+				room.roomstats();
+				existingRoom=1;
+			}
+		});
+		if(existingRoom==0){
+			ActiveRooms.add(new Room(roomid,roomtype));
+			console.log("New Room");
+		}	
+		
+		socket.room=roomid;
+		socket.join(roomid);
 		aUsers.add(user);
 		user.welcome();
 		
 		let activeUsers = new Set();
 		
-		aUsers.forEach(x=>x.chatroom===data.split(",")[1] ? activeUsers.add(x.username):x);
-		
+		aUsers.forEach(x=>x.chatroom.name===roomid && x.chatroom.type===roomtype ? activeUsers.add(x.username):x);
+		console.log(activeUsers);
 		io.to(socket.room).emit("chat_message", "<strong>"+socket.userId+" joined the room </strong>");
-		io.to(data.split(",")[1]).emit("new user", [...activeUsers]);
+		io.to(socket.room).emit("new user", [...activeUsers]);
 	});
 	
 	socket.on('chat_message',async(data)=>{
 		io.to(socket.room).emit("chat_message", "<strong>"+socket.userId+"</strong> "+data);
 	});
-
   socket.on("disconnect", () => {
+	  console.log("DISCONNECT!!!");
 	aUsers.forEach(x=>x.username===socket.userId ? aUsers.delete(x):x);
     io.to(socket.room).emit("user disconnected", socket.userId);
   });

@@ -29,11 +29,11 @@ const iceServers = {
 const newUserConnected = (user) => {
   userName = user || `User${Math.floor(Math.random() * 1000000)}`;
   
-  socket.emit("new user", userName+","+(document.location.pathname).split("/")[2]);
+  socket.emit("new user", userName+","+(document.location.pathname));
   addToUsersBox(userName);
   //Pulls current user list, then inside this call initiates peerconnections
-	socket.emit('get_Users',userName+","+(document.location.pathname).split("/")[2])
-	roomId=(document.location.pathname).split("/")[2];
+	roomId='v'+(document.location.pathname).split("/")[2];
+	socket.emit('get_Users',userName+","+roomId);
 };
 
 const addToUsersBox = (userNamet) => {
@@ -51,7 +51,9 @@ const addToUsersBox = (userNamet) => {
 
 $('#chatForm').submit(function(e){
 		e.preventDefault();
-		socket.emit('chat_message',$('#txt').val());
+		var mess=$('#txt').val()
+		mess.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+		socket.emit('chat_message',mess);
 		$('#txt').val('');
 		return false;
 });
