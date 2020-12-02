@@ -161,7 +161,8 @@ io.on('connection',function(socket){
   
 });
 const port=process.env.PORT || 3000;
-server.listen(port,'localhost',function(){
+const ip='localhost'
+server.listen(port,ip,function(){
 console.log(`listening on port ${port}...`);
 });
 module.exports = app;
